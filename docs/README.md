@@ -1,20 +1,18 @@
-# Banking Call Center Agentic AI — Detailed Documentation
+# Banking Call Center Agentic AI — Detailed Docs
 
-This folder centralizes the detailed reference material for the sample agentic AI system. Use it to understand the full architecture, data APIs, and ways to extend the solution.
+This guide explains the business context, architecture, operations, and sample conversations for the demo agent.
 
 ## Business case
-
-Banks and credit unions can use an agentic AI to triage and resolve common support requests (balances, card issues, loan schedules) without waiting for a human representative. The system also hands off complex cases with full context to minimize customer effort and reduce average handle time.
+Banks and credit unions can use an agentic AI to triage and resolve common support requests (balances, card issues, loan schedules) without waiting for a human representative. The agent hands off complex cases with full context to minimize customer effort and reduce average handle time.
 
 ## Architecture
-
 ```mermaid
 flowchart LR
     C[Customer via Phone/Chat]
     Agent[AI Agent Core\nIntent detection, context, and responses]
     Tools[Tool Executor\nMaps tool calls to API requests]
     Gateway[API Gateway\nRoutes and coordinates API calls]
-    APIs[Data APIs Layer\nCustomer | Account | Transaction | Loan | Card | Support]
+    APIs[Data APIs Layer\nCustomer, Account, Transaction, Loan, Card, Support]
     DB[(Mock Banking Data\nCustomers, Accounts, Transactions, Loans, Cards, Tickets)]
 
     C <--> Agent
@@ -32,7 +30,6 @@ flowchart LR
 - **Mock Database**: Pre-populated demo data to keep experimentation self-contained.
 
 ## Features
-
 ### Data APIs
 The system simulates six banking microservices:
 1. Customer API — Customer profiles, identification, verification.
@@ -57,24 +54,14 @@ The system simulates six banking microservices:
 - Debit and credit cards plus support ticket history.
 
 ## Operations
+1. Install dependencies: `pip install -r requirements.txt`.
+2. Launch notebooks (preferred interface): `jupyter lab` or `jupyter notebook`.
+3. Run the demos:
+   - `notebooks/agent_demo.ipynb` for the conversational agent walkthrough.
+   - `notebooks/api_demo.ipynb` for the API layer showcase.
+4. CLI alternatives remain available via `python run_demo.py --demo` and `python run_api_demo.py`.
 
-### Prerequisites
-- Python 3.9+
-- `pip`
-
-### Setup
-```bash
-pip install -r requirements.txt
-```
-
-### Run the demos
-```bash
-python run_demo.py        # Chat with the agent
-python run_api_demo.py    # See each API exercised
-```
-
-### Configuration
-Environment variables (set via `.env`):
+Configuration via environment variables (e.g., `.env` stored under `credentials/`):
 ```bash
 # AI Provider (mock for demo, openai or anthropic for production)
 AI_PROVIDER=mock
@@ -87,39 +74,29 @@ API_LATENCY_MAX_MS=200
 LOG_LEVEL=INFO
 ```
 
-## Sample interaction
+## Sample interactions
+### Auto-login welcome with top questions
 ```
-You: Hello, I need help with my account
-
-Agent: Hello! Welcome to SecureBank. I'd be happy to help you today.
-To get started, could you please provide your phone number or email
-so I can look up your account?
-
-You: My phone number is +1-555-0101
-
-Agent: I found your account. Hello John Anderson! You're registered
-as a premium customer. How can I assist you today?
-
-You: What's my account balance?
-
-Agent: Your total balance across all accounts is $67,582.67.
-
-Here's the breakdown:
-- Checking (ACC001): $15,432.67
-- Savings (ACC002): $52,150.00
-
-You: I lost my card ending in 4521
-
-Agent: I've processed your report for the card ending in 4521.
-
-Actions taken:
-- Card has been immediately blocked
-- All pending transactions will be reviewed
-- A replacement card will be shipped within 5-7 business days
-
-Please monitor your account for any unauthorized transactions.
-If you see any suspicious activity, please report it immediately.
+Agent: Welcome back to SecureBank! I've signed you in with your saved profile. Here are the top 3 things customers ask:
+        1) What's my balance?  2) Recent transactions?  3) Card or loan help?
+        How can I help you today?
 ```
+
+### Lost credit card handling
+```
+You: I lost my credit card.
+Agent: I see a transaction happened 2 minutes ago—do you want to mark this as fraud? I can also block the credit card and initiate a new one.
+You: Do both.
+Agent: Done. The card is blocked and a new card is being issued. You'll receive it in 7 days; a tracking number will be shared in 1-2 business days.
+Agent: I also see 5 transactions in the last 10 days. Do you want to mark them as fraud?
+You: I am good.
+Agent: Thanks for confirming. I've logged the update—anything else I can help with?
+```
+
+## Folder structure and guardrails
+- `credentials/` and `data/` are git-ignored to keep secrets and local artifacts out of version control (see `.gitignore`).
+- `notebooks/` holds runnable Jupyter flows so experimentation stays reproducible.
+- `docs/` can expand with playbooks, benchmarks, and domain notes as the agent evolves.
 
 ## Future improvements
 - Plug in real LLM providers for production-grade responses.

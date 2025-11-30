@@ -1,46 +1,34 @@
-# Banking Call Center Agentic AI — Detailed Documentation
+# Banking Call Center Agentic AI
 
-A sample agentic AI system for banking customer support that demonstrates how an intelligent agent can orchestrate tools and data APIs to resolve caller requests quickly.
+A lightweight, customer-service agent that orchestrates banking APIs to resolve common requests without waiting on a human representative.
 
-## Quick start
+- **What you get:** a mock banking stack (customers, accounts, cards, loans, support tickets) plus an agent that chains tool calls to solve tasks.
+- **How to try it:** install dependencies, open the notebooks, and run the guided demos.
+- **Want details?** The full architecture, business case, and improvement ideas live in [`docs/README.md`](docs/README.md).
 
-1. Install dependencies
+## Quick start (notebooks first)
+1. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-2. Run the interactive agent demo
+2. Launch Jupyter and open the notebooks:
    ```bash
-   python run_demo.py
+   jupyter lab  # or jupyter notebook
    ```
-3. Explore the API simulation demo
-   ```bash
-   python run_api_demo.py
-   ```
+3. Run the demos inside:
+   - `notebooks/agent_demo.ipynb` for the end-to-end agent flow
+   - `notebooks/api_demo.ipynb` for the underlying data APIs
 
-## What’s inside (at a glance)
+> Prefer the CLI? You can still run `python run_demo.py --demo` or `python run_api_demo.py`, but the notebooks are the primary entry points.
 
-- AI agent core with tool-based orchestration and conversation context.
-- Banking microservice simulators for customer, account, transaction, loan, card, and support data.
-- Mock data layer with realistic customer, account, and card records for safe experimentation.
-
-## Architecture (high level)
-
-```mermaid
-flowchart LR
-    C[Customer via Phone/Chat]
-    Agent[AI Agent Core\nIntent + Context + Responses]
-    Tools[Tool Executor]
-    Gateway[API Gateway]
-    APIs[Data APIs Layer\nCustomer | Account | Transaction | Loan | Card | Support]
-    DB[(Mock Banking Data)]
-
-    C <--> Agent
-    Agent <--> Tools
-    Tools <--> Gateway
-    Gateway <--> APIs
-    APIs --> DB
+## Repository layout (cookie-cutter friendly)
+```
+├── credentials/   # ignored in git; place secrets/env files here
+├── data/          # ignored in git; local datasets or exports
+├── docs/          # full architecture, business case, and guides
+├── notebooks/     # runnable demos (agent and API notebooks)
+├── src/           # agent, tools, and mock API implementations
+└── README.md      # high-level overview
 ```
 
-## Documentation
-
-Detailed docs (architecture, features, business use cases, and improvement ideas) live in the [`docs/`](docs/README.md) folder.
+For deeper guidance, diagrams, and sample conversations, see [`docs/README.md`](docs/README.md).
