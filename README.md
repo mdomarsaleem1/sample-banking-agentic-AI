@@ -1,4 +1,4 @@
-# Banking Call Center Agentic AI System
+# Banking Call Center Agentic AI — Detailed Documentation
 
 A sample agentic AI system for banking customer support that demonstrates how an intelligent agent can orchestrate tools and data APIs to resolve caller requests quickly.
 
