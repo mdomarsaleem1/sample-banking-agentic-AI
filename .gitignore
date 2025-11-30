@@ -70,7 +70,7 @@ docs/_build/
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+.ipynb_checkpoints/
 
 # IPython
 profile_default/
@@ -94,12 +94,15 @@ celerybeat.pid
 
 # Environments
 .env
+*.env
+.env*/
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+.envrc
 
 # Spyder project settings
 .spyderproject
@@ -129,3 +132,9 @@ dmypy.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Local data and secrets (cookie-cutter guardrails)
+data/
+credentials/
+!data/.gitkeep
+!credentials/.gitkeep
